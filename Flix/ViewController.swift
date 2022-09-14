@@ -32,7 +32,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     print(error.localizedDescription)
              } else if let data = data {
                     let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-                    print(dataDictionary)
+//                    print(dataDictionary)
                     // TODO: Get the array of movies
                  self.movies = dataDictionary["results"] as! [[String:Any]]
                     // TODO: Store the movies in a property to use elsewhere
@@ -59,10 +59,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let baseUrl = "https://image.tmdb.org/t/p/w185"
         let posterPath = movie["poster_path"] as! String
         let imageUrl = URL(string: baseUrl + posterPath)
-//        let imagePath = "https://api.themoviedb.org/3/movie/\(movie["id"])/images?api_key=<<api_key>>&language=en-US"
-//        let imageUrl = URL(string:imagePath)
+
         cell.posterView.af.setImage(withURL: imageUrl!)
         return cell
+    }
+    
+    
+    // prepare for when you're leaving the screen and going to next screen
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for: cell)!
+        let movie = movies[indexPath.row]
+        
+        let movieDetailsVC = segue.destination as! MovieDetailsViewController
+        movieDetailsVC.movie = movie
+        
+        // deselect the movieRow
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
