@@ -9,9 +9,6 @@ import UIKit
 import AlamofireImage
 
 class MovieGridViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
-
-    
-
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -41,7 +38,6 @@ class MovieGridViewController: UIViewController, UICollectionViewDataSource, UIC
                     print(error.localizedDescription)
              } else if let data = data {
                     let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-//                    print(dataDictionary)
                     // TODO: Get the array of movies
                  self.movies = dataDictionary["results"] as! [[String:Any]]
                     // TODO: Store the movies in a property to use elsewhere
